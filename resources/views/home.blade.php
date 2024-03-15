@@ -3,7 +3,7 @@
 @section('content')
   <div class="container mt-5">
     <form action="{{ route('store') }}" method="post" class="card">
-        @csrf
+      @csrf
       <div class="card-body">
         <h1>BELAJAR DASAR LARAVEL</h1>
         <div class="mb-3">
@@ -32,5 +32,33 @@
         </div>
       </div>
     </form>
+
+    <table class="table my-5 table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Recipe Title</th>
+          <th scope="col">Method</th>
+          <th scope="col">Ingredients</th>
+          <th scope="col">Categories</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach ($recipes as $item)
+          <tr>
+            <th scope="row">{{$loop->iteration}}</th>
+            <td>{{ $item->title }}</td>
+            <td>{{ $item->method }}</td>
+            <td>{{ $item->ingredients }}</td>
+            <td>{{ $item->categories }}</td>
+            <td>
+              <a href="{{ route('destroy', $item->id) }}" class="btn btn-danger" data-confirm-delete="true">Delete</a>
+            </td>
+          </tr>
+        @endforeach
+
+      </tbody>
+    </table>
   </div>
 @endsection

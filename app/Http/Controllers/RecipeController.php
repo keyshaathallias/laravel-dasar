@@ -12,7 +12,14 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $recipes = Recipes::all();
+        // return view('home', [
+        //     "recipes" => $recipes
+        // ]);
+        $title = 'Delete Recipe!';
+        $text = "Are you sure you want to delete?";
+        confirmDelete($title, $text);
+        return view('home', compact('recipes'));
     }
 
     /**
@@ -28,7 +35,7 @@ class RecipeController extends Controller
         ]);
 
         Recipes::create($credentials);
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Resep Berhasil Dibuat!');
     }
 
     /**
@@ -60,6 +67,8 @@ class RecipeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Recipes::destroy($id);
+        return redirect()->back()->with('success', 'Resep Berhasil Hapus!');
+
     }
 }
