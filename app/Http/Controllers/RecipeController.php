@@ -51,7 +51,8 @@ class RecipeController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $recipe=Recipes::where('id', $id)->first();
+        return view('edit', compact('recipe'));
     }
 
     /**
@@ -59,7 +60,15 @@ class RecipeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $credentials=$request->validate([
+            "title"=>"required",
+            "method"=>"required",
+            "ingredients"=>"required",
+            "categories"=>"required"
+        ]);
+
+        Recipes::where('id', $id)->update($credentials);
+        return redirect('/recipes')->with('success', 'Resep Berhasil Diedit!');
     }
 
     /**
